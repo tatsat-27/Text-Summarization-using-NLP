@@ -1,0 +1,190 @@
+.heading_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(240, 142, 218);
+  width: auto;
+}
+
+/* Heading text style */
+.heading {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-family: "Roboto Slab", serif;
+  color: #000000;
+}
+
+/* Text area for input */
+.input_text_area {
+  min-width: 50vw;
+  max-width: 50vw;
+  min-height: 50vh;
+  max-height: 50vh;
+  background-color: #ffffff;
+}
+
+/* Container for summary with scroll */
+.summary_div {
+  border: 1px solid black;
+  width: fit-content;
+  height: 50vh;
+  width: 48vw;
+  background-color: #ffffff;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* Scrollbar styling */
+.summary_div::-webkit-scrollbar,
+.input_text_area::-webkit-scrollbar {
+  width: 10px;
+}
+
+.summary_div::-webkit-scrollbar-thumb,
+.input_text_area::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 6px;
+}
+
+.summary_div::-webkit-scrollbar-thumb:hover,
+.input_text_area::-webkit-scrollbar-thumb:hover {
+  background-color: #f394bf;
+}
+
+/* Animated text */
+.animate-character {
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #0a2472 0%,
+    #6a0572 29%,
+    #d9bf77 67%,
+    rgb(247, 10, 207) 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 5s linear infinite;
+  display: inline-block;
+  font-size: 50px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Styling for buttons */
+.submit-button {
+  display: flex;
+  position: absolute;
+  top: 85vh;
+  left: 44vw;
+  background: linear-gradient(to bottom right, #f70202, #8a2c07);
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.5;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.clear-button {
+  display: flex;
+  position: absolute;
+  top: 85vh;
+  left: 75vw;
+  background: linear-gradient(to bottom right, #f70202, #8a2c07);
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.5;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.clear-button:not([disabled]):hover {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+    -0.125rem -0.125rem 1rem rgba(255, 118, 117, 0.5),
+    0.125rem 0.125rem 1rem rgba(255, 160, 122, 0.5);
+}
+
+.submit-button:not([disabled]):hover {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+    -0.125rem -0.125rem 1rem rgba(255, 118, 117, 0.5),
+    0.125rem 0.125rem 1rem rgba(255, 160, 122, 0.5);
+}
+
+/* Styling for file input */
+.slidecontainer {
+  display: flex;
+  position: absolute;
+  top: 86vh;
+  left: 18vw;
+}
+
+input[type="file"]::file-selector-button {
+  border: none;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  background: linear-gradient(to bottom right, #f70202, #8a2c07);
+  transition: 1s;
+}
+
+input[type="file"] {
+  display: flex;
+  position: absolute;
+  top: 85vh;
+  left: 10px;
+  background: linear-gradient(to bottom right, #f70202, #8a2c07);
+  border: 0;
+  border-radius: 12px;
+  color: transparent;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.5;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  width: 100px;
+}

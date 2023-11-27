@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Summarizer</title>
+  <link rel="stylesheet" href="static\style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.0.0/mammoth.browser.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Roboto+Slab:wght@700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body style="background-color: rgb(240, 142, 218); font-family: 'Bruno Ace SC', sans-serif;
+font-family: 'Roboto Slab', serif;">
+  <div class="heading_div">
+    <h1 class="heading animate-charcter">TEXT SUMMARIZER</h1>
+  </div>
+  <div>
+    <table>
+      <thead class="table-head">
+        <th>
+          <h1 style="
+                display: flex;
+                align-items: left;
+                justify-content: left;
+                font-family: 'Bruno Ace SC', sans-serif;
+                font-family: 'Roboto Slab', serif;
+              ">
+            Enter your text :
+          </h1>
+        </th>
+        <th>
+          <h1 style="
+                display: flex;
+                align-items: left;
+                justify-content: left;
+                font-family: 'Bruno Ace SC', sans-serif;
+                font-family: 'Roboto Slab', serif;
+              ">
+            Summary :
+          </h1>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left-column">
+            <form method="post" action="/" enctype="multipart/form-data">
+              <textarea class="input_text_area" name="text" id="textInput" rows="10" cols="40"
+                placeholder="Enter your text here"></textarea>
+              <label for="fileInput" style="font-family: Oswald, sans-serif"></label>
+              <input type="file" id="fileInput" name="fileInput text" accept=".txt, .doc, .docx, .pdf"
+                onchange="loadFile()" />
+
+              <input type="submit" value="Summarize" class="submit-button" />
+              <input type="button" value="Clear" class="clear-button" onclick="clearTextArea()" />
+              <div class="slidecontainer">
+                <label for="numSentences" style="font-family: Oswald, sans-serif">Number of Sentences :
+                </label>
+                <input type="number" id="numSentences" name="numSentences" min="10" max="150" value="10" />
+                <script>
+                  var slider = document.getElementById("numSentences");
+                  var output = document.getElementById("numSentencesValue");
+                  output.innerHTML = slider.value;
+
+                  slider.oninput = function () {
+                    output.innerHTML = this.value;
+                  };
+
+                  function clearTextArea() {
+                    document.querySelector(".input_text_area").value = "";
+                    document.querySelector(".summary_div").innerHTML = "";
+                  }
+
+                  function loadFile() {
+                    var input, file, fr;
+
+                    input = document.getElementById('fileInput');
+                    if (!input.files || !input.files[0]) {
+                      return;
+                    }
+
+                    file = input.files[0];
+
+                    if (file.name.endsWith('.pdf')) {
+                      var fileReader = new FileReader();
+                      fileReader.onload = function () {
+                        var typedarray = new Uint8Array(this.result);
+                        displayPDF(typedarray);
+                      };
+                      fileReader.readAsArrayBuffer(file);
+                    } else if (file.name.endsWith('.doc') || file.name.endsWith('.docx')) {
+                      var fileReader = new FileReader();
+                      fileReader.onload = function () {
+                        mammoth.extractRawText({ arrayBuffer: this.result })
+                          .then(displayText);
+                      };
+                      fileReader.readAsArrayBuffer(file)
+                    } else {
+                      fr = new FileReader();
+                      fr.onload = function () {
+                        document.getElementById('textInput').value = fr.result;
+                      };
+                      fr.readAsText(file);
+                    }
+                  }
+
+                  function displayPDF(data) {
+                    pdfjsLib.getDocument({ data: data }).promise.then(function (pdf) {
+                      pdf.getPage(1).then(function (page) {
+                        page.getTextContent().then(function (textContent) {
+                          var text = "";
+                          textContent.items.forEach(function (item) {
+                            text += item.str + " ";
+                          });
+                          document.getElementById('textInput').value = text;
+                        });
+                      });
+                    });
+                  }
+                  function displayText(result) {
+                    document.getElementById('textInput').value = result.value;
+                  }
+                </script>
+              </div>
+            </form>
+            {% if error %}
+            <p style="color: red; font-family: Oswald, sans-serif">
+              {{ error }}
+            </p>
+            {% endif %}
+          </td>
+          <td class="right-column">
+            <div class="summary_div">
+              {% if summary %} {% for sentence in summary %} {{ sentence }}<br />
+              {% endfor %} {% endif %}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
